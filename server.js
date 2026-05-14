@@ -6,9 +6,17 @@ const app = express();
 
 app.use(cors());
 
+const SECRET_KEY = "DJCHEROO_SECRET";
+
 app.get("/proxy", async (req, res) => {
 
     try {
+
+        const key = req.query.key;
+
+        if (key !== SECRET_KEY) {
+            return res.status(403).send("Unauthorized");
+        }
 
         const url = req.query.url;
 
@@ -32,6 +40,6 @@ app.get("/proxy", async (req, res) => {
 
 app.listen(3000, () => {
 
-    console.log("Proxy funcionando en puerto 3000");
+    console.log("Secure proxy funcionando");
 
 });
