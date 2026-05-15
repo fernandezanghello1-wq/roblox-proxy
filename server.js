@@ -34,7 +34,7 @@ app.get("/proxy", async (req, res) => {
             }
         });
 
-        res.json(response.data);
+       res.send(JSON.stringify(response.data));
 
     } catch (err) {
 
