@@ -18,7 +18,7 @@ app.get("/proxy", async (req, res) => {
     try {
 
         const key = req.query.key;
-        const url = req.query.url;
+        const url = decodeURIComponent(req.query.url);
 
         if (key !== SECRET_KEY) {
             return res.status(403).send("Unauthorized");
