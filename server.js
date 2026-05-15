@@ -30,15 +30,18 @@ app.get("/proxy", async (req, res) => {
 
         const response = await axios.get(url, {
             headers: {
-                "User-Agent": "Mozilla/5.0"
+                "User-Agent": "Mozilla/5.0",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             }
         });
 
-       res.send(JSON.stringify(response.data));
+        res.status(200).send(JSON.stringify(response.data));
 
     } catch (err) {
 
-        console.log(err);
+        console.log("PROXY ERROR:");
+        console.log(err.response?.data || err.message);
 
         res.status(500).send("Proxy Error");
 
@@ -59,13 +62,18 @@ app.post("/webhook", async (req, res) => {
         const webhook =
             "https://discord.com/api/webhooks/1504662497704284232/NKPYplxnYxtvBSDkLQIoqn9Yj1Xrrn97bhAtmUcU_Uia4HoYHBEun7cFqliSnrrLeNYf";
 
-        await axios.post(webhook, req.body);
+        await axios.post(webhook, req.body, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
         res.send("Webhook enviado 😎");
 
     } catch (err) {
 
-        console.log(err);
+        console.log("WEBHOOK ERROR:");
+        console.log(err.response?.data || err.message);
 
         res.status(500).send("Webhook Error");
 
